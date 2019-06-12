@@ -1,0 +1,25 @@
+# This is our new experiment file
+# Please note that you may override this settings in experiment configuration file
+declarations: 
+   lstm2: 
+      parameters: [count]
+      body: 
+       - bidirectional:  
+           - cuDNNLSTM: [count, true]
+       - bidirectional:    
+           - cuDNNLSTM: [count/2, false]
+              
+   net:  
+       - lstm2: [100]
+       - dense: [1,"sigmoid"]
+       
+preprocessing: 
+  - binarize_target: 
+  - tokenize:  
+  - vectorize: [embeddings/paragram_300_sl999.txt,160]                  
+architecture: net 
+optimizer: adam  
+batch: 512 
+stages:
+  - epochs: 100  
+loss: binary_crossentropy       

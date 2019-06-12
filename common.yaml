@@ -1,0 +1,26 @@
+# This file stores common configuration settings
+# Please note that you may override this settings in experiment configuration file
+inference_batch: 128
+imports: [musket_text.preprocessors]
+callbacks:
+  EarlyStopping:
+    patience: 100
+    monitor: val_binary_accuracy
+    verbose: 1
+  ReduceLROnPlateau:
+    patience: 8
+    factor: 0.5
+    monitor: val_binary_accuracy
+    mode: auto  
+    cooldown: 5
+    verbose: 1     
+metrics: [binary_accuracy]    
+dataset: 
+    get_train: []    
+datasets: 
+    test: 
+      from_csv:  
+        path: test.csv
+        idColumn: id
+        targetColumn: target
+        featureColumn: comment_text        
