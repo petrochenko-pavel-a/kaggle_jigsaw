@@ -1,0 +1,31 @@
+declarations: 
+   lstm2: 
+      parameters: [count]
+      body:
+       - bidirectional:  
+           - cuDNNLSTM: [count, true]
+       - bidirectional:    
+           - cuDNNLSTM: [count/2, false]
+   net:
+       - word_indexes_embedding:  [ embeddings/glove.840B.300d.txt ]
+       - gaussianNoise: 0.1
+       - lstm2: [100]
+       - dense: [1,"sigmoid"]
+folds_count: 1       
+preprocessing: 
+  - binarize_target: 
+  - tokenize:  
+  - tokens_to_indexes:
+       maxLen: 160
+  - disk-cache:        
+architecture: net 
+optimizer: adam  
+batch: 512
+stages:
+  - epochs: 5  
+loss: binary_crossentropy     
+stratified: true 
+validationSplit: 0.2
+primary_metric: val_binary_accuracy 
+aggregation_metric: measure
+final_metrics: [measure]
