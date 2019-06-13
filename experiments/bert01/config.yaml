@@ -23,7 +23,7 @@ preprocessing:
 #        seed: 232
 #        body:
 #         - remove_random_words: 0.05
-         - swap_random_words: 0.06
+#         - swap_random_words: 0.06
 architecture: net 
 optimizer: adam  
 batch: 8
