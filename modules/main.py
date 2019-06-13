@@ -1,9 +1,23 @@
 from musket_core import preprocessing,datasets,model,tasks
 from musket_core.datasets import PredictionItem
 from musket_core.context import get_current_project_path
+from musket_text.bert.bert_encoder import create_tokenizer
+from musket_text.bert.input_constructor import prepare_input
+from layers import BERT_DIR, BERT_MAX_SEQ_LENGTH
 import pandas as pd
 import numpy as np
 import benchmark
+
+bertTokenizer = create_tokenizer(BERT_DIR)
+
+@preprocessing.dataset_preprocessor
+def text_to_bert_input(input):
+    bInput = prepare_input(input, BERT_MAX_SEQ_LENGTH, bertTokenizer, False)
+    if bInput.attn_mask is not None:
+        return [x[0] for x in [bInput.input_ids, bInput.input_type_ids, bInput.token_pos, bInput.attn_mask]]
+    else:
+        return [x[0] for x in [bInput.input_ids, bInput.input_type_ids, bInput.token_pos]]
+
 
 @preprocessing.dataset_preprocessor
 def binarize_target(inp:PredictionItem):
