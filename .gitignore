@@ -1,0 +1,13 @@
+*.iml
+.idea
+.idea/*
+.project
+
+/data
+/data/*
+
+*.weights
+*.folds_split
+*.holdout_split
+*inProgress.yaml
+*config.yaml.shapes
