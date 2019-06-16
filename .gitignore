@@ -13,3 +13,5 @@
 *.holdout_split
 *inProgress.yaml
 *config.yaml.shapes
+*.contribution
+*error.yaml
