@@ -1,0 +1,14 @@
+allStages:
+  binary_accuracy: {max: 0.9665766327307985, mean: 0.9665766327307985, min: 0.9665766327307985,
+    std: 0.0}
+  measure: {max: 0.9175947829460692, mean: 0.9175947829460692, min: 0.9175947829460692,
+    std: 0.0}
+cfgName: config.yaml
+completed: true
+folds: [0]
+stages:
+- binary_accuracy: {max: 0.9665766327307985, mean: 0.9665766327307985, min: 0.9665766327307985,
+    std: 0.0}
+  measure: {max: 0.9175947829460692, mean: 0.9175947829460692, min: 0.9175947829460692,
+    std: 0.0}
+subsample: 1.0
