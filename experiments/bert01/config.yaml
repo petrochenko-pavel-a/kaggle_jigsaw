@@ -1,0 +1,37 @@
+declarations: 
+   net:
+      body:
+       - bert:
+       - split-concat:
+           - GlobalMaxPooling1D:
+           - GlobalAveragePooling1D:
+       - dense: [144, relu]
+       - dense: [1, sigmoid]
+           
+folds_count: 5
+testSplit: 0.2       
+preprocessing:
+  - text_to_bert_input:
+#  - binarize_target:
+#  - tokenize:
+#
+#  - tokens_to_indexes:
+#       maxLen: 160
+#  - disk-cache:
+#  - augmentation:
+#        weights: [0.8,0.8]
+#        seed: 232
+#        body:
+#         - remove_random_words: 0.05
+#         - swap_random_words: 0.06
+architecture: net 
+optimizer: adam  
+batch: 8
+stages:
+  - epochs: 5  
+loss: binary_crossentropy     
+stratified: true 
+validationSplit: 0.2
+primary_metric: val_loss
+aggregation_metric: measure
+final_metrics: [measure]
