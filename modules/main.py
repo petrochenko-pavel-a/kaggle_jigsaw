@@ -13,7 +13,9 @@ bertTokenizer = None
 @preprocessing.dataset_preprocessor
 def text_to_bert_input(input):
     global bertTokenizer
-    bertTokenizer = create_tokenizer(BERT_DIR)
+    if bertTokenizer is None:
+        bertTokenizer = create_tokenizer(BERT_DIR)
+
     bInput = prepare_input(input, BERT_MAX_SEQ_LENGTH, bertTokenizer, False)
     if bInput.attn_mask is not None:
         return [x[0] for x in [bInput.input_ids, bInput.input_type_ids, bInput.token_pos, bInput.attn_mask]]
