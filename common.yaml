@@ -1,6 +1,6 @@
 # This file stores common configuration settings
 # Please note that you may override this settings in experiment configuration file
-inference_batch: 128
+inference_batch: 512
 imports: [musket_text.preprocessors]
 callbacks:
   EarlyStopping:
@@ -14,7 +14,7 @@ callbacks:
     mode: auto  
     cooldown: 5
     verbose: 1     
-metrics: [binary_accuracy]    
+metrics: [binary_accuracy, matthews_correlation ,auc]    
 dataset: 
     get_train: []    
 datasets: 

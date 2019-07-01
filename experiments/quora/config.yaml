@@ -1,0 +1,53 @@
+declarations: 
+   lstm2: 
+      parameters: [count]
+      body:
+       - bidirectional:  
+           - cuDNNLSTM: [count, true]
+       - bidirectional:    
+           - cuDNNLSTM: [count/2, false]
+   lstmBranch:
+     body:
+       - split-concat:
+         - word_indexes_embedding:  [ embeddings/glove.840B.300d.txt ]
+         - word_indexes_embedding:  [ embeddings/paragram_300_sl999.txt ]
+         - word_indexes_embedding:  [ embeddings/wiki-news-300d-1M.vec]
+       - gaussianNoise: 0.05
+       - lstm2: [300]
+       #- dropout: 0.5
+   textFeatureBranch:
+     body:
+       - dense: [1,"sigmoid"]
+   net:
+     inputs: [tokenIndexes, textStats]
+     body:
+     - lstmBranch:
+         name: lstmBranch
+         inputs: tokenIndexes
+     - textFeatureBranch:
+         name: textFeatureBranch
+         inputs: textStats
+     - concatenate: [lstmBranch,textFeatureBranch]
+     - dense: [1,"sigmoid"]
+folds_count: 5
+testSplit: 0.2       
+preprocessing: 
+  - binarize_target: 
+  - tokenize:
+  - split-preprocessor:
+    - tokens_to_indexes:
+         maxLen: 160
+    - text_length:
+
+
+  
+architecture: net 
+optimizer: adam  
+batch: 512
+stages:
+  - epochs: 6  
+loss: binary_crossentropy     
+stratified: true 
+primary_metric: val_binary_accuracy
+aggregation_metric: measure
+final_metrics: [measure]

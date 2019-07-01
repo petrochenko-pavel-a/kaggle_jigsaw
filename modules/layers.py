@@ -1,6 +1,7 @@
 from musket_text.bert.load import load_google_bert
+from musket_core.context import get_current_project_path
 
-BERT_DIR = "C:/bert/uncased_L-12_H-768_A-12"
+BERT_DIR = get_current_project_path() + "/data/bert/uncased_L-12_H-768_A-12"
 BERT_MAX_SEQ_LENGTH = 256
 
 def bert(input):
