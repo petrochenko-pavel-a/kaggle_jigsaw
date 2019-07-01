@@ -2,10 +2,8 @@ declarations:
    net:
       body:
        - bert:
-       - split-concat:
-           - GlobalMaxPooling1D:
-           - GlobalAveragePooling1D:
-       - dense: [144, relu]
+       - cropFirst:
+       - dense: [500, tanh]
        - dense: [1, sigmoid]
            
 folds_count: 5
@@ -23,7 +21,7 @@ preprocessing:
 #        seed: 232
 #        body:
 #         - remove_random_words: 0.05
-         - swap_random_words: 0.06
+ #        - swap_random_words: 0.06
 architecture: net 
 optimizer: adam  
 batch: 8
